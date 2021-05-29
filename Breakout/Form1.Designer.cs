@@ -88,7 +88,7 @@ namespace Breakout
             // player
             // 
             this.player.BackColor = System.Drawing.Color.White;
-            this.player.Location = new System.Drawing.Point(351, 406);
+            this.player.Location = new System.Drawing.Point(348, 406);
             this.player.Name = "player";
             this.player.Size = new System.Drawing.Size(100, 32);
             this.player.TabIndex = 1;
