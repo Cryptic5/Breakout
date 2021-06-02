@@ -88,7 +88,7 @@ namespace Breakout
             // player
             // 
             this.player.BackColor = System.Drawing.Color.White;
-            this.player.Location = new System.Drawing.Point(348, 406);
+            this.player.Location = new System.Drawing.Point(359, 406);
             this.player.Name = "player";
             this.player.Size = new System.Drawing.Size(100, 32);
             this.player.TabIndex = 1;
@@ -97,7 +97,7 @@ namespace Breakout
             // ball
             // 
             this.ball.BackColor = System.Drawing.Color.Yellow;
-            this.ball.Location = new System.Drawing.Point(386, 310);
+            this.ball.Location = new System.Drawing.Point(348, 290);
             this.ball.Name = "ball";
             this.ball.Size = new System.Drawing.Size(20, 20);
             this.ball.TabIndex = 2;
@@ -315,6 +315,7 @@ namespace Breakout
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.player);
             this.Controls.Add(this.txtScore);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Form1";
             this.Text = "Break Out Game";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyIsDown);

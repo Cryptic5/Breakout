@@ -24,7 +24,6 @@ namespace Breakout
         Random rnd = new Random();
 
 
-
         public Form1()
         {
             InitializeComponent();
@@ -50,10 +49,18 @@ namespace Breakout
             }
         }
 
+        private void gameOver(string message)
+        {
+            isGameOver = true;
+            gameTimer.Stop();
 
+            txtScore.Text = "Score: " + score + " " + message;
+        }
 
         private void mainGameTimerEvent(object sender, EventArgs e)
         {
+            txtScore.Text = "Score: " + score;
+
             if (goLeft == true && player.Left > 0)
             {
                 player.Left -= playerSpeed;
@@ -89,10 +96,32 @@ namespace Breakout
                 }
             }
 
+            foreach (Control x in this.Controls)
+            {
+                if (x is PictureBox && (string)x.Tag == "blocks")
+                {
+                    if(ball.Bounds.IntersectsWith(x.Bounds))
+                    {
+                        score += 1;
+
+                        bally = -bally;
+
+                        this.Controls.Remove(x);
+                    }
 
 
+                }
+            }
 
+            if(score == 18)
+            {
+                gameOver(" - You win!");
+            }
 
+            if(ball.Top > 500)
+            {
+                gameOver(" - You lose!");
+            }
         }
 
         private void keyIsDown(object sender, KeyEventArgs e)
