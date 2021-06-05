@@ -23,20 +23,29 @@ namespace Breakout
 
         Random rnd = new Random();
 
+        PictureBox[] blockArray;
+
 
         public Form1()
         {
             InitializeComponent();
-            setupGame();
+            placeBlocks();
         }
 
         private void setupGame()
         {
+            isGameOver = false;
             score = 0;
             ballx = 5;
             bally = 5;
             playerSpeed = 12;
             txtScore.Text = "Score: " + score;
+
+            ball.Left = 400;
+            ball.Top = 390;
+
+            player.Left = 360;
+            player.Top = 415;
 
             gameTimer.Start();
 
@@ -57,6 +66,50 @@ namespace Breakout
             txtScore.Text = "Score: " + score + " " + message;
         }
 
+        private void placeBlocks()
+        {
+            blockArray = new PictureBox[20];
+
+            int a = 0;
+
+            int top = 50;
+            int left = 100; 
+
+            for(int i = 0; i < blockArray.Length; i++)
+            {
+                blockArray[i] = new PictureBox();
+                blockArray[i].Height = 32;
+                blockArray[i].Width = 100;
+                blockArray[i].Tag = "blocks";
+                blockArray[i].BackColor = Color.White;
+
+                if(a == 5)
+                {
+                    top = top + 50;
+                    left = 100;
+                    a = 0;
+                }
+
+                if(a < 5)
+                {
+                    a++;
+                    blockArray[i].Left = left;
+                    blockArray[i].Top = top;
+                    this.Controls.Add(blockArray[i]);
+                    left = left + 130;
+                }
+            }
+            setupGame();
+        }
+
+        private void removeBlocks()
+        {
+            foreach(PictureBox x in blockArray)
+            {
+                this.Controls.Remove(x);
+            }
+        }
+
         private void mainGameTimerEvent(object sender, EventArgs e)
         {
             txtScore.Text = "Score: " + score;
@@ -65,15 +118,15 @@ namespace Breakout
             {
                 player.Left -= playerSpeed;
             }
-            if (goRight == true && player.Left < 700)
-            {
+            if (goRight == true && player.Left < 712)
+            { 
                 player.Left += playerSpeed;
             }
 
             ball.Left += ballx;
             ball.Top += bally;
 
-            if (ball.Left < 0 || ball.Left > 775)
+            if (ball.Left < 0 || ball.Left > 790)
             {
                 ballx = -ballx;
             }
@@ -108,19 +161,17 @@ namespace Breakout
 
                         this.Controls.Remove(x);
                     }
-
-
                 }
             }
 
-            if(score == 18)
+            if(score == 20)
             {
-                gameOver(" - You win!");
+                gameOver(" - You win! Press Enter to play again.");
             }
 
             if(ball.Top > 500)
             {
-                gameOver(" - You lose!");
+                gameOver(" - You lose! Press Enter to play again.");
             }
         }
 
@@ -145,6 +196,11 @@ namespace Breakout
             if (e.KeyCode == Keys.Right)
             {
                 goRight = false;
+            }
+            if(e.KeyCode == Keys.Enter && isGameOver == true)
+            {
+                removeBlocks();
+                placeBlocks();
             }
         }
     }
